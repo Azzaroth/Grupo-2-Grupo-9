@@ -1,0 +1,1 @@
+Diretório de scripts de criação de tabelas no bd, população, etc..
