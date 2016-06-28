@@ -1,38 +1,60 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Cadastro</title>
+        <link rel="stylesheet" type="text/css" href="css/produtos.css" /> 
     </h:head>
     <h:body>
-        <div style="width: 500px">
-            <h:form acceptcharset="UTF-8">
-                <h:outputText value="Nome:"/>
-                <h:inputText value="#{cliente.c.nome}"/>
-                <h:outputText value="Idade:"/>
-                <h:inputText value="#{cliente.c.idade}"/>
-                <h:outputText value="Email"/>
-                <p:inputText id="email" required="true" label="email" size="40"
-                             requiredMessage="Entre seu endereço de e-mail."
-                             validatorMessage="Seu endereço de e-mail não é válido."
-                             value="#{cliente.c.email}">
-                    <f:validateRegex
-                        pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+
-                        (\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                </p:inputText>
-                <h:outputText value="Rua:"/>
-                <h:inputText value="#{cliente.c.rua}"/>           
-                <h:outputText value="Número"/>
-                <h:inputText value="#{cliente.c.numero}"/>
-                <h:outputText value="CPF:"/>
-                <h:inputText value="#{cliente.c.cpf}"/>
-                <p:commandButton value="Enviar" style="margin:20px"
-                                 action="#{cliente.enviar}"></p:commandButton>
+        <div class="corpo" style="border: solid 1px; border-color: black">
+            <div class="corpo-logo">
+                <div class="logo">
+                    Comperfect
+                </div>
+                <div class="pesquisa">
+                    <p:inputText value="" style="width: 340px; height: 25px"/>
+                    <p:commandButton value="Pesquisar" actionListener="#" icon="ui-icon-search"/>
+                </div>
+            </div>
+
+            <h:form>
+                <p:breadCrumb>
+                    <p:menuitem value="Home" url="Produtos.xhtml" />
+                    <p:menuitem rendered="#{login.autenticado == false}" value="Log in" url="Login.xhtml" />
+                    <p:menuitem rendered="#{login.autenticado == true}" value="Log out" actionListener="#{login.deslogar}" />
+                    <p:menuitem value="Cadastro" url="Cadastro.xhtml" />
+                    <p:menuitem value="Produtos" url="Produtos.xhtml" />
+                    <p:menuitem value="Pagamento" url="pagamento.xhtml" />
+                </p:breadCrumb>
+            </h:form>
+
+            <div style="padding: 50px 300px">
+                <h:form id="formCadastrar">
+            <h:panelGrid columns="2">
+                <h:outputText value="Nome:" />
+                <p:inputText value="#{cliente.c.nome}" />
+                <h:outputText value="Email:" />
+                <p:inputText value="#{cliente.c.email}" />
+                <h:outputText value="Senha:" />
+                <p:inputText value="#{cliente.c.senha}" />
+                <h:outputText value="CPF:" />
+                <p:inputMask id="ssn" value="#{cliente.c.cpf}" mask="999.999.999-99"/>
+                <h:outputText value="Idade:" />
+                <p:inputText value="#{cliente.c.idade}" />
+                <h:outputText value="Rua:" />
+                <p:inputText value="#{cliente.c.rua}" />
+                <h:outputText value="Numero:" />
+                <p:inputText value="#{cliente.c.numero}" />
+                <p:commandButton value="Cadastrar" actionListener="#{cliente.cadastrar}"/>
+            </h:panelGrid>
         </h:form>
-    </div>
-</h:body>
+            </div>
+        </div>
+
+
+    </h:body>
 </html>
 

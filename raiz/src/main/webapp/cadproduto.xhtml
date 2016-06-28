@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Cadastro</title>
+    </h:head>
+    <h:body>
+
+        <!-- Sistema de Session, caso o usuário esteja logado, utilizar
+        rendered="#{login.autenticado == true} e modificar a página, caso esteja
+        deslogado, utilizar rendered="#{login.autenticado == false} e fazer as
+        modificações (seria interessante criar um template pra pagina, assim
+        deixar um div apenas para as páginas que serão modificadas, com isso
+        só será necessário copiar e colar o template em cada arquivo da página)-->
+        <h:outputText rendered="#{login.autenticado == true}" value="Sim" />  
+        <h:outputText rendered="#{login.autenticado == false}" value="Não" />
+
+        <!-- Comando para deslogar -->
+        <p:commandButton value="Deslogar"
+                         actionListener="#{login.deslogar}"/>
+
+        <h:form id="formCadastrar">
+            <h:panelGrid columns="2">
+                <h:outputText value="Categoria:" />
+                <p:inputText value="#{produto.p.categoria}" />
+                <h:outputText value="Modelo:" />
+                <p:inputText value="#{produto.p.modelo}" />
+                <h:outputText value="Descrição:" />
+                <p:inputText value="#{produto.p.descricao}" />
+                <h:outputText value="Preço:" />
+                <p:inputText value="#{produto.p.preco}" />
+                <h:outputText value="Imagem:" />
+                <p:inputText value="#{produto.p.imagem}" />
+                <p:commandButton value="Cadastrar" actionListener="#{produto.cadastrar}"/>
+            </h:panelGrid>
+            <h:dataTable value="#{produto.listarProduto()}" var="listagem" border="1" id="tabela">
+                <h:column>
+                    <f:facet name="header">
+                        Categoria
+                    </f:facet>
+                    <h:outputText value="#{listagem.categoria}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Modelo
+                    </f:facet>
+                    <h:outputText value="#{listagem.modelo}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Descricao
+                    </f:facet>
+                    <h:outputText value="#{listagem.descricao}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Preço
+                    </f:facet>
+                    <h:outputText value="#{listagem.preco}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Imagem
+                    </f:facet>
+                    <h:outputText value="#{listagem.imagem}"/>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

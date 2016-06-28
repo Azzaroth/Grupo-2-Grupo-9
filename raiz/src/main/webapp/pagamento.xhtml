@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Pagamento</title>
+        <link rel="stylesheet" type="text/css" href="css/produtos.css" /> 
+    </h:head>
+    <h:body>
+        <div class="corpo" style="border: solid 1px; border-color: black; height: 881px">
+            <div class="corpo-logo">
+                <div class="logo">
+                    Comperfect
+                </div>
+                <div class="pesquisa">
+                    <p:inputText value="" style="width: 340px; height: 25px"/>
+                    <p:commandButton value="Pesquisar" actionListener="#" icon="ui-icon-search"/>
+                </div>
+                <div style="width: 120px; display: inline-block">
+                    <h:outputText rendered="#{login.autenticado == true}" value="Bem vindo, #{login.nome}" />  
+                    <h:outputText rendered="#{login.autenticado == false}" value="Faça login ou cadastre-se" />
+                </div>
+            </div>
+
+            <h:form>
+                <p:breadCrumb>
+                    <p:menuitem value="Home" url="Produtos.xhtml" />
+                    <p:menuitem rendered="#{login.autenticado == false}" value="Log in" url="Login.xhtml" />
+                    <p:menuitem rendered="#{login.autenticado == true}" value="Log out" actionListener="#{login.deslogar}" />
+                    <p:menuitem value="Cadastro" url="Cadastro.xhtml" />
+                    <p:menuitem value="Produtos" url="Produtos.xhtml" />
+                    <p:menuitem value="Pagamento" url="pagamento.xhtml" />
+                </p:breadCrumb>
+            </h:form>
+
+            <div class="menuesquerda">
+                <div class="carrinho">
+                    Carrinho
+                </div>
+                <h:form>
+                    <p:menu>
+                        <p:submenu label="Memória RAM">
+                            <p:menuitem value="#{login.getpRam().modelo}" actionListener="#{produto.setCategoria('ram')}" />
+                        </p:submenu>
+                        <p:submenu label="HD">
+                            <p:menuitem value="#{login.getpHd().modelo}" actionListener="#{produto.setCategoria('hd')}" />
+                        </p:submenu>
+                        <p:submenu label="Placa mãe">
+                            <p:menuitem value="#{login.getpMae().modelo}" actionListener="#{produto.setCategoria('mae')}" />
+                        </p:submenu>
+                        <p:submenu label="Fonte">
+                            <p:menuitem value="#{login.getpFonte().modelo}" actionListener="#{produto.setCategoria('fonte')}" />
+                        </p:submenu>
+                        <p:submenu label="Processador">
+                            <p:menuitem value="#{login.getpProcessador().modelo}" actionListener="#{produto.setCategoria('processador')}"  />
+                        </p:submenu>
+                        <p:submenu label="Placa de vídeo">
+                            <p:menuitem value="#{login.getpVideo().modelo}" actionListener="#{produto.setCategoria('video')}" />
+                        </p:submenu>
+                        <p:submenu label="Gabinete">
+                            <p:menuitem value="#{login.getpGabinete().modelo}" actionListener="#{produto.setCategoria('gabinete')}" />
+                        </p:submenu>
+                    </p:menu>
+                    <p:commandButton value="Limpar carrinho" actionListener="#{login.limpar()}" style="width: 233px; color: #333"/>
+                </h:form>
+            </div>
+
+
+
+            <div style="padding: 50px 0 0 300px">
+                <h:form id="formCadastrar">
+                    <h:outputText rendered="#{login.autenticado == false}" value="Faça login ou cadastre-se para competar a compra" />
+                    <h:outputText rendered="#{login.verificaCompra() == false and login.autenticado == true}" value="Seu produto está incompleto" />
+                    <br/>
+                    <p:commandButton rendered="#{login.autenticado == false}" ajax="false" value="Login" action="Login.xhtml"/>
+                    <p:commandButton rendered="#{login.autenticado == false}"  ajax="false" value="Cadastro" action="Cadastro.xhtml"/>
+                    <p:commandButton rendered="#{login.verificaCompra() == false and login.autenticado == true}" value="Voltar para produtos" action="Produtos.xhtml"/>
+                </h:form>
+
+                <div style="width: 550px; float: left">
+                    <h:form rendered="#{login.verificaCompra() == true and login.autenticado == true}">
+                        <h2 style="text-align: center"><h:outputText value="Valor total da compra"/></h2>
+                        <h2 style="text-align: center"><h:outputText value="#{login.getSubtotal()}"><f:convertNumber type="currency" currencySymbol="R$" /></h:outputText></h2>
+                        <h3 style="margin-top:0">Forma de pagamento</h3>
+                        <p:tabView>
+                            <p:tab title="Boleto">
+                                <h:panelGrid columns="1">
+                                    <h:outputText value="O pagamento a vista no boleto possui 10% de desconto " style="color: red"/>
+   
+                                    <h:panelGrid columns="2" style="color: black">
+                                        <h:outputText value="Valor total com desconto:" />
+                                            <h:outputText value="#{login.getDesconto()}"><f:convertNumber type="currency" currencySymbol="R$" /></h:outputText>
+                                        <br/>
+                                        <br/>
+                                        <p:commandButton value="Finalizar compra" actionListener="#{login.finalizarCompra('boleto')}"/>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                            </p:tab>
+                            <p:tab title="Cartão">
+                                <h:panelGrid columns="2" style="color: black">
+                                    <h:outputText value="Número do cartão:" />
+                                    <p:inputText value=" " />
+                                    <h:outputText value="Validade:" />
+                                    <p:inputMask  value=" " mask="99/99"/>
+                                    <h:outputText value="CVV:" />
+                                    <p:inputText value=" " />
+                                    <br/>
+                                    <br/>
+                                    <p:commandButton value="Finalizar compra" actionListener="#{login.finalizarCompra('cartao')}"/>
+                                </h:panelGrid>
+                            </p:tab>
+                        </p:tabView>
+                    </h:form>
+                </div>
+
+            </div>
+        </div>
+
+    </h:body>
+</html>
+

@@ -1,0 +1,67 @@
+body{
+    font-family: Arial, sans-serif;
+}
+
+.menu-superior{
+    display: inline-block;
+}
+
+.corpo{
+    padding: 0;
+    width: 1010px;
+    margin: 0 auto;
+    border-radius: 6px;
+}
+
+.corpo-logo{
+    background-color: rgb(196, 196, 196);
+    padding: 0;
+    width: 1010px;
+    margin: 0 auto;
+    border-radius: 6px 6px 0 0;
+}
+
+.logo{
+    width: 230px;
+    padding: 50px 20px;
+    font-size: 50px;
+    display: inline-block;
+    color: rgb(25, 25, 25);
+}
+
+.pesquisa{
+    width: 500px;
+    padding: 0px 20px;
+    display: inline-block;
+}
+
+.menuesquerda{
+    float: left;
+    display: block;
+    width: 232px;
+}
+
+.corpo-itens{
+    margin-left: 232px;
+    width: 778px;  
+}
+
+.item-imagem{
+    width: 200px;
+    margin: 0;
+}
+
+.item-imagem2{
+    width: 400px;
+    margin: 0;
+}
+
+.carrinho{
+    background-color: rgb(150, 150, 150);
+    color: rgb(25, 25, 25);
+    width: 233px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    padding: 19px 0;
+}

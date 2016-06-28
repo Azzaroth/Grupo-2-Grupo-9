@@ -37,9 +37,12 @@ public class Cliente implements Serializable {
     @Column(name = "IDADE", length = 3)
     @NotNull
     private int idade;
-    @Column(name = "CPF", length = 11)
+    @Column(name = "CPF", length = 14)
     @NotNull
     private String cpf;
+    @Column(name = "SENHA", length = 22)
+    @NotNull
+    private String senha;
     @Column(name = "EMAIL")
     @NotNull
     private String email;
@@ -50,11 +53,10 @@ public class Cliente implements Serializable {
     @NotNull
     private int numero;
     
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")
-    private List<Pedido> pedidos;
+    /*@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")
+    private List<Pedido> pedidos;*/
 
     public Cliente() {
-        
     }
     
     public long getId() {
@@ -105,13 +107,13 @@ public class Cliente implements Serializable {
         this.numero = numero;
     }
 
-    public List<Pedido> getPedidos() {
+    /*public List<Pedido> getPedidos() {
         return pedidos;
     }
 
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
-    }
+    }*/
 
     public int getIdade() {
         return idade;
@@ -119,6 +121,14 @@ public class Cliente implements Serializable {
 
     public void setIdade(int idade) {
         this.idade = idade;
+    }
+  
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
        
 }

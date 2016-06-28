@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Produtos</title>
+        <link rel="stylesheet" type="text/css" href="css/produtos.css" /> 
+    </h:head>
+    <h:body>
+
+        <div class="corpo">
+            <div class="corpo-logo">
+                <div class="logo">
+                    Comperfect
+                </div>
+                <div class="pesquisa">
+                    <p:inputText value="" style="width: 340px; height: 25px"/>
+                    <p:commandButton value="Pesquisar" actionListener="#" icon="ui-icon-search"/>
+                </div>
+                <div style="width: 120px; display: inline-block">
+                    <h:outputText rendered="#{login.autenticado == true}" value="Bem vindo, #{login.nome}" />  
+                    <h:outputText rendered="#{login.autenticado == false}" value="Faça login ou cadastre-se" />
+                </div>
+            </div>
+            <h:form>
+                <p:breadCrumb>
+                    <p:menuitem value="Home" url="Produtos.xhtml" />
+                    <p:menuitem rendered="#{login.autenticado == false}" value="Log in" url="Login.xhtml" />
+                    <p:menuitem rendered="#{login.autenticado == true}" value="Log out" actionListener="#{login.deslogar}" />
+                    <p:menuitem value="Cadastro" url="Cadastro.xhtml" />
+                    <p:menuitem value="Produtos" url="Produtos.xhtml" />
+                    <p:menuitem value="Pagamento" url="pagamento.xhtml" />
+                </p:breadCrumb>
+            </h:form>
+            <div class="menuesquerda">
+                <div class="carrinho">
+                    Carrinho
+                </div>
+                <h:form>
+                    <p:menu>
+                        <p:submenu label="Memória RAM">
+                            <p:menuitem value="#{login.getpRam().modelo}" actionListener="#{produto.setCategoria('ram')}" />
+                        </p:submenu>
+                        <p:submenu label="HD">
+                            <p:menuitem value="#{login.getpHd().modelo}" actionListener="#{produto.setCategoria('hd')}" />
+                        </p:submenu>
+                        <p:submenu label="Placa mãe">
+                            <p:menuitem value="#{login.getpMae().modelo}" actionListener="#{produto.setCategoria('mae')}" />
+                        </p:submenu>
+                        <p:submenu label="Fonte">
+                            <p:menuitem value="#{login.getpFonte().modelo}" actionListener="#{produto.setCategoria('fonte')}" />
+                        </p:submenu>
+                        <p:submenu label="Processador">
+                            <p:menuitem value="#{login.getpProcessador().modelo}" actionListener="#{produto.setCategoria('processador')}"  />
+                        </p:submenu>
+                        <p:submenu label="Placa de vídeo">
+                            <p:menuitem value="#{login.getpVideo().modelo}" actionListener="#{produto.setCategoria('video')}" />
+                        </p:submenu>
+                        <p:submenu label="Gabinete">
+                            <p:menuitem value="#{login.getpGabinete().modelo}" actionListener="#{produto.setCategoria('gabinete')}" />
+                        </p:submenu>
+                    </p:menu>
+                    <p:dataList value="#{login.getSubtotal()}" var="subtotal" type="definition">
+                        <f:facet name="header">
+                            Subtotal
+                        </f:facet>
+                        <h2 style="text-align: center"><h:outputText value="#{subtotal}"><f:convertNumber type="currency" currencySymbol="R$" /></h:outputText></h2>
+                    </p:dataList>
+                    <p:commandButton value="Limpar carrinho" actionListener="#{login.limpar()}" style="width: 233px; color: #333"/>
+                    <p:commandButton value="Comprar" ajax="false" action="pagamento.xhtml" style="height: 50px; font-size: 20px; width: 233px; background-color: blue; color: black"/>
+                </h:form>
+            </div>
+
+            
+            <div class="corpo-itens">
+                <h:form id="form">
+                    <p:dataGrid var="listagem" value="#{produto.listarProdutoEspecifico()}" columns="3"
+                                rows="9" paginator="true" id="produtos"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="9,12,15">
+
+                        <f:facet name="header">
+                            Produtos
+                        </f:facet>
+
+                        <p:panel class="item" header="#{listagem.modelo}" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+
+
+                                <p:commandLink update=":form:produtoDetalhe" oncomplete="PF('produtoDialog').show()" title="Ver detalhes">
+                                    <p:graphicImage class="item-imagem" name="imagem/#{listagem.imagem}.jpg"/>     
+                                    <f:setPropertyActionListener value="#{listagem}" target="#{produto.selectedProduto}" />
+                                </p:commandLink>
+                                <h:outputText value="#{listagem.preco}"><f:convertNumber type="currency" currencySymbol="R$" /></h:outputText>
+                                <p:commandButton value="Add ao carrinho" actionListener="#{login.addProduto(listagem)}"/>
+                            </h:panelGrid>
+                        </p:panel>
+
+                    </p:dataGrid>
+
+                    <p:dialog header="Detalhes" widgetVar="produtoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="produtoDetalhe" style="text-align:center;">
+                            <p:panelGrid  columns="2" rendered="#{not empty produto.selectedProduto}" columnClasses="label,value">
+                                <f:facet name="header">
+                                    <p:graphicImage class="item-imagem2" name="imagem/#{produto.selectedProduto.imagem}.jpg"/> 
+                                </f:facet>
+
+                                <h:outputText value="Código:" />
+                                <h:outputText value="#{produto.selectedProduto.id}" />
+
+                                <h:outputText value="Preço:" />
+                                <h:outputText value="R$ #{produto.selectedProduto.preco}" />
+
+                                <h:outputText value="Descrição:" />
+                                <h:outputText value="#{produto.selectedProduto.descricao}" />
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+            </div>
+        </div>
+    </h:body>
+</html>
+

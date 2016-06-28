@@ -1,6 +1,10 @@
-/home/azaroth/NetBeansProjects/Comperfect/src/main/java/br/controller/ClienteController.java
-/home/azaroth/NetBeansProjects/Comperfect/src/main/java/br/model/Produto.java
-/home/azaroth/NetBeansProjects/Comperfect/src/main/java/br/model/Fonte.java
-/home/azaroth/NetBeansProjects/Comperfect/src/main/java/br/model/Pedido.java
-/home/azaroth/NetBeansProjects/Comperfect/src/main/java/br/controller/ClienteDAO.java
-/home/azaroth/NetBeansProjects/Comperfect/src/main/java/br/model/Cliente.java
+/home/lucas/Área de Trabalho/gustavo/Comperfect/src/main/java/br/controller/ProdutoDAO.java
+/home/lucas/Área de Trabalho/gustavo/Comperfect/src/main/java/br/model/Pedido.java
+/home/lucas/Área de Trabalho/gustavo/Comperfect/src/main/java/br/model/Cliente.java
+/home/lucas/Área de Trabalho/gustavo/Comperfect/src/main/java/br/controller/ProdutoBean.java
+/home/lucas/Área de Trabalho/gustavo/Comperfect/src/main/java/br/controller/PedidoDAO.java
+/home/lucas/Área de Trabalho/gustavo/Comperfect/src/main/java/br/controller/HibernateUtil.java
+/home/lucas/Área de Trabalho/gustavo/Comperfect/src/main/java/br/controller/ClienteBean.java
+/home/lucas/Área de Trabalho/gustavo/Comperfect/src/main/java/br/controller/LoginBean.java
+/home/lucas/Área de Trabalho/gustavo/Comperfect/src/main/java/br/controller/ClienteDAO.java
+/home/lucas/Área de Trabalho/gustavo/Comperfect/src/main/java/br/model/Produto.java

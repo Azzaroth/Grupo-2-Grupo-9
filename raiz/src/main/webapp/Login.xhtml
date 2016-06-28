@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Login</title>
+        <link rel="stylesheet" type="text/css" href="css/produtos.css" /> 
+    </h:head>
+    <h:body>
+        <div class="corpo" style="border: solid 1px; border-color: black">
+            <div class="corpo-logo">
+                <div class="logo">
+                    Comperfect
+                </div>
+                <div class="pesquisa">
+                    <p:inputText value="" style="width: 340px; height: 25px"/>
+                    <p:commandButton value="Pesquisar" actionListener="#" icon="ui-icon-search"/>
+                </div>
+            </div>
+
+            <h:form>
+                <p:breadCrumb>
+                    <p:menuitem value="Home" url="Produtos.xhtml" />
+                    <p:menuitem rendered="#{login.autenticado == false}" value="Log in" url="Login.xhtml" />
+                    <p:menuitem rendered="#{login.autenticado == true}" value="Log out" actionListener="#{login.deslogar}" />
+                    <p:menuitem value="Cadastro" url="Cadastro.xhtml" />
+                    <p:menuitem value="Produtos" url="Produtos.xhtml" />
+                    <p:menuitem value="Pagamento" url="pagamento.xhtml" />
+                </p:breadCrumb>
+            </h:form>
+
+            <div style="padding: 50px 150px">
+                <h:form id="formLogin" style="margin: 0 auto">
+                    <h:outputText value="Email: " />
+                    <p:inputText value="#{login.email}" />
+                    <h:outputText value="Senha: " style="margin-left: 10px"/>
+                    <p:inputText value="#{login.senha}" />
+                    <p:commandButton value="Entrar" actionListener="#{login.autenticar}" style="margin-left: 10px"/>
+                </h:form>
+            </div>
+        </div>
+    </h:body>
+</html>
+
