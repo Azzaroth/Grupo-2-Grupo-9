@@ -32,6 +32,15 @@ public class LoginBean {
     private Produto pMae = new Produto();
     private Produto pFonte = new Produto();
     private Produto pProcessador = new Produto();
+    private int numParcelas;
+
+    public int getNumParcelas() {
+        return numParcelas;
+    }
+
+    public void setNumParcelas(int numParcelas) {
+        this.numParcelas = numParcelas;
+    }
 
     public Produto getpRam() {
         return pRam;
@@ -99,6 +108,7 @@ public class LoginBean {
 
     public void autenticar(ActionEvent actionEvent) throws IOException {
         Cliente c = new ClienteDAO().validar(this.getEmail(), this.getSenha());
+        email="";
         if (c == null) {
             this.setAutenticado(false);
             setContext(FacesContext.getCurrentInstance().getExternalContext());
@@ -169,7 +179,10 @@ public class LoginBean {
     public void finalizarCompra(String forma) throws IOException {
         this.p.setForma(forma);
         if(forma.equals("boleto"))
-            this.p.setTotal(this.getDesconto());
+            this.p.setTotal(this.getDescontoBoleto());
+        else
+            if(numParcelas == 0)
+                this.p.setTotal(this.getDescontoCartao());
         else
             this.p.setTotal(this.getSubtotal());
         new PedidoDAO().inserir(p);
@@ -190,8 +203,12 @@ public class LoginBean {
         return sub;
     }
     
-    public double getDesconto() {
+    public double getDescontoBoleto() {
         return this.getSubtotal() * 0.9;
+    }
+
+    public double getDescontoCartao() {
+        return this.getSubtotal() * 0.95;
     }
 
     public void deslogar(ActionEvent actionEvent) throws IOException {

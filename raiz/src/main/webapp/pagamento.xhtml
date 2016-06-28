@@ -80,7 +80,9 @@
                 </h:form>
 
                 <div style="width: 550px; float: left">
+
                     <h:form rendered="#{login.verificaCompra() == true and login.autenticado == true}">
+
                         <h2 style="text-align: center"><h:outputText value="Valor total da compra"/></h2>
                         <h2 style="text-align: center"><h:outputText value="#{login.getSubtotal()}"><f:convertNumber type="currency" currencySymbol="R$" /></h:outputText></h2>
                         <h3 style="margin-top:0">Forma de pagamento</h3>
@@ -88,10 +90,10 @@
                             <p:tab title="Boleto">
                                 <h:panelGrid columns="1">
                                     <h:outputText value="O pagamento a vista no boleto possui 10% de desconto " style="color: red"/>
-   
+
                                     <h:panelGrid columns="2" style="color: black">
                                         <h:outputText value="Valor total com desconto:" />
-                                            <h:outputText value="#{login.getDesconto()}"><f:convertNumber type="currency" currencySymbol="R$" /></h:outputText>
+                                        <h:outputText value="#{login.getDescontoBoleto()}"><f:convertNumber type="currency" currencySymbol="R$" /></h:outputText>
                                         <br/>
                                         <br/>
                                         <p:commandButton value="Finalizar compra" actionListener="#{login.finalizarCompra('boleto')}"/>
@@ -99,16 +101,31 @@
                                 </h:panelGrid>
                             </p:tab>
                             <p:tab title="Cartão">
-                                <h:panelGrid columns="2" style="color: black">
-                                    <h:outputText value="Número do cartão:" />
-                                    <p:inputText value=" " />
-                                    <h:outputText value="Validade:" />
-                                    <p:inputMask  value=" " mask="99/99"/>
-                                    <h:outputText value="CVV:" />
-                                    <p:inputText value=" " />
-                                    <br/>
-                                    <br/>
-                                    <p:commandButton value="Finalizar compra" actionListener="#{login.finalizarCompra('cartao')}"/>
+                                <h:panelGrid columns="1">
+                                    <h:outputText value="O pagamento a vista no cartão possui 5% de desconto " style="color: red"/>
+                                    <h:panelGrid columns="2" style="color: black">
+                                        <h:outputText value="Valor do pagamento a vista:" />
+                                        <h:outputText value="#{login.getDescontoCartao()}"><f:convertNumber type="currency" currencySymbol="R$" /></h:outputText>
+                                        <br/><br/>
+                                        <h:outputText value="" />
+                                        <h:outputText value="Número de parcelas:" />
+                                        <p:selectOneRadio id="console" value="#{login.numParcelas}">
+                                            <f:selectItem itemLabel="A vista" itemValue="0" />
+                                            <f:selectItem itemLabel="3X" itemValue="3" />
+                                            <f:selectItem itemLabel="6X" itemValue="6" />
+                                            <f:selectItem itemLabel="12X" itemValue="12" />
+                                        </p:selectOneRadio>
+
+                                        <h:outputText value="Número do cartão:" />
+                                        <p:inputText value=" " />
+                                        <h:outputText value="Validade:" />
+                                        <p:inputMask  value=" " mask="99/99"/>
+                                        <h:outputText value="CVV:" />
+                                        <p:inputText value=" " />
+                                        <br/>
+                                        <br/>
+                                        <p:commandButton value="Finalizar compra" actionListener="#{login.finalizarCompra('cartao')}"/>
+                                    </h:panelGrid>
                                 </h:panelGrid>
                             </p:tab>
                         </p:tabView>

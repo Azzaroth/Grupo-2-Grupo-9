@@ -35,7 +35,7 @@
                     <h:outputText value="Email: " />
                     <p:inputText value="#{login.email}" />
                     <h:outputText value="Senha: " style="margin-left: 10px"/>
-                    <p:inputText value="#{login.senha}" />
+                    <p:password  value="#{login.senha}" />
                     <p:commandButton value="Entrar" actionListener="#{login.autenticar}" style="margin-left: 10px"/>
                 </h:form>
             </div>
